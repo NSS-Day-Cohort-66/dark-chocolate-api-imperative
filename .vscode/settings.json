@@ -7,5 +7,20 @@
                 "cmd": "workbench.action.debug.restart"
             }
         ]
-    }
+    },
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "tesst",
+            "database": "./shipping.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "another test",
+            "database": "./shipping.sqlite3"
+        }
+    ]
 }
