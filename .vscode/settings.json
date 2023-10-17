@@ -1,11 +1,20 @@
 {
-    "saveAndRunExt": {
-        "commands": [
-            {
-                "match": "\\.(py$)",
-                "isShellCommand": false,
-                "cmd": "workbench.action.debug.restart"
-            }
-        ]
+  "saveAndRunExt": {
+    "commands": [
+      {
+        "match": "\\.(py$)",
+        "isShellCommand": false,
+        "cmd": ""
+      }
+    ]
+  },
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "test",
+      "database": "./shipping.db"
     }
+  ]
 }
