@@ -1,0 +1,32 @@
+title Shipping Ships API
+
+participant Client
+participant Python
+participant ship_view.py
+participant JSONServer
+participant Handler
+database Database
+bottomparticipants 
+entryspacing 0.8
+Client->>Python:GET request to "/ships"
+Python->>JSONServer:Run do_GET() method
+JSONServer -> Handler: Invoke parse_url()
+note over Handler: Conditionals to check if query parameter is present
+note over Handler: create url_dictionary(resource and id)
+Handler -->JSONServer: Here is the parsed url as a dictionary
+note over JSONServer:Run through conditionals\nto determine requested resources
+JSONServer->ship_view.py:invoke list_ships()
+ship_view.py ->Database: Open Connection to Database
+Database -->ship_view.py: Connection is opened
+ship_view.py ->Database: SQL Query to get information you want
+Database ->ship_view.py: Here are query_results 
+loop 
+note over ship_view.py:append each row in query\nresults to ships list, making\neach object a dictionary (dict())
+end 
+note over ship_view.py: serialize python list to JSON encoded string
+ship_view.py ->JSONServer: Return list of ships (in JSON format)
+JSONServer -> Handler: Invoke response method\nwith specified body\nand code
+note over Handler: Invoke set_response_code\nto set status to provided code
+note over Handler: Adds metadata to response to\ndetermine data type and\nrequest permisions
+note over Handler: Convert body strings to\nbytes and assigns\nresponse to wfile attribute
+Handler-->Client:Here is the proper response and code and target location

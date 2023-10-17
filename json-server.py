@@ -35,11 +35,11 @@ class JSONServer(HandleRequests):
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
         elif url["requested_resource"] == "ships":
-            if url["pk"] != 0:
-                response_body = retrieve_ship(url["pk"])
+            if "pk" in url and url["pk"] != 0:
+                response_body = retrieve_ship(url)
                 return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
-            response_body = list_ships()
+            response_body = list_ships(url)
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
         else:
@@ -116,11 +116,6 @@ class JSONServer(HandleRequests):
         pass
 
 
-
-
-
-
-
 #
 # THE CODE BELOW THIS LINE IS NOT IMPORTANT FOR REACHING YOUR LEARNING OBJECTIVES
 #
@@ -128,6 +123,7 @@ def main():
     host = ''
     port = 8000
     HTTPServer((host, port), JSONServer).serve_forever()
+
 
 if __name__ == "__main__":
     main()
