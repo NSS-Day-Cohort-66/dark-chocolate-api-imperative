@@ -144,8 +144,6 @@ def retrieve_ship(url):
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-        if url["pk"] != 0:
-
         if url["query_params"] == {"_expand": ['hauler']}:
             db_cursor.execute("""
                 SELECT
