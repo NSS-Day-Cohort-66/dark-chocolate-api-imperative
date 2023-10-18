@@ -1,26 +1,20 @@
 {
-    "saveAndRunExt": {
-        "commands": [
-            {
-                "match": "\\.(py$)",
-                "isShellCommand": false,
-                "cmd": "workbench.action.debug.restart"
-            }
-        ]
-    },
-    "sqltools.useNodeRuntime": true,
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "driver": "SQLite",
-            "name": "tesst",
-            "database": "./shipping.db"
-        },
-        {
-            "previewLimit": 50,
-            "driver": "SQLite",
-            "name": "another test",
-            "database": "./shipping.sqlite3"
-        }
+  "saveAndRunExt": {
+    "commands": [
+      {
+        "match": "\\.(py$)",
+        "isShellCommand": false,
+        "cmd": ""
+      }
     ]
+  },
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "test",
+      "database": "./shipping.db"
+    }
+  ]
 }

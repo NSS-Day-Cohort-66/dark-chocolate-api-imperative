@@ -4,9 +4,9 @@ from nss_handler import HandleRequests, status
 
 
 # Add your imports below this line
-from views import list_docks, retrieve_dock, delete_dock, update_dock
-from views import list_haulers, retrieve_hauler, delete_hauler, update_hauler
-from views import list_ships, retrieve_ship, delete_ship, update_ship
+from views import list_docks, retrieve_dock, delete_dock, update_dock, create_dock
+from views import list_haulers, retrieve_hauler, delete_hauler, update_hauler, create_hauler
+from views import list_ships, retrieve_ship, delete_ship, update_ship, create_ship
 
 
 class JSONServer(HandleRequests):
@@ -35,7 +35,7 @@ class JSONServer(HandleRequests):
             return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
         elif url["requested_resource"] == "ships":
-            if "pk" in url and url["pk"] != 0:
+            if url["pk"] != 0:
                 response_body = retrieve_ship(url)
                 return self.response(response_body, status.HTTP_200_SUCCESS.value)
 
@@ -112,8 +112,33 @@ class JSONServer(HandleRequests):
 
     def do_POST(self):
         """Handle POST requests from a client"""
+        # Parse the URL and get the primary key
+        url = self.parse_url(self.path)
 
-        pass
+        # Get the request body JSON for the new data
+        content_len = int(self.headers.get('content-length', 0))
+        request_body = self.rfile.read(content_len)
+        request_body = json.loads(request_body)
+
+        if url["requested_resource"] == "ships":
+            successfully_created = create_ship(request_body)
+            if successfully_created:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
+
+        elif url["requested_resource"] == "docks":
+            successfully_created = create_dock(request_body)
+            if successfully_created:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
+
+        elif url["requested_resource"] == "haulers":
+            successfully_created = create_hauler(request_body)
+            if successfully_created:
+                return self.response("", status.HTTP_201_SUCCESS_CREATED.value)
+                
+        else:
+            return self.response("Requested resource not found", status.HTTP_404_CLIENT_ERROR_RESOURCE_NOT_FOUND.value)
+
+
 
 
 #
@@ -123,7 +148,6 @@ def main():
     host = ''
     port = 8000
     HTTPServer((host, port), JSONServer).serve_forever()
-
 
 if __name__ == "__main__":
     main()

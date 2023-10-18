@@ -137,7 +137,6 @@ def list_ships(url):
 
     return serialized_ships
 
-
 def retrieve_ship(url):
     # Open a connection to the database
     with sqlite3.connect("./shipping.db") as conn:
@@ -189,4 +188,16 @@ def retrieve_ship(url):
             dictionary_version_of_object = dict(query_results)
             serialized_ship = json.dumps(dictionary_version_of_object)
 
+    return serialized_ship
+
+
+def create_ship(request_body):
+    with sqlite3.connect("./shipping.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO Ship VALUES (null, ? , ?)
+        """, (request_body["name"], request_body["hauler_id"]))
+        single_ship = db_cursor.fetchone()
+        serialized_ship = json.dumps(single_ship)
     return serialized_ship

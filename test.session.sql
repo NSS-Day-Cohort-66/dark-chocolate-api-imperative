@@ -1,28 +1,3 @@
--- Run this block if you already have a database and need to re-create it
-DELETE FROM Ship;
-DELETE FROM Hauler;
-DELETE FROM Dock;
-
-DROP TABLE IF EXISTS Ship;
-DROP TABLE IF EXISTS Hauler;
-DROP TABLE IF EXISTS Dock;
--- End block
-
-
-CREATE TABLE `Dock` (
--- Run this block to create the tables and seed them with some initial data
-	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`location`	TEXT NOT NULL,
-	`capacity` INTEGER NOT NULL
-);
-
-CREATE TABLE `Hauler` (
-	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-	`name`	TEXT NOT NULL,
-	`dock_id` INTEGER NOT NULL,
-	FOREIGN KEY(`dock_id`) REFERENCES `Dock`(`id`)
-);
-
 CREATE TABLE `Ship` (
 	`id`  INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`name`  TEXT NOT NULL,
@@ -55,4 +30,15 @@ INSERT INTO `Ship` VALUES (null, "Becker", 5);
 INSERT INTO `Ship` VALUES (null, "Dickens", 6);
 INSERT INTO `Ship` VALUES (null, "Kunde", 6);
 INSERT INTO `Ship` VALUES (null, "Hermiston", 5);
--- End block
+
+SELECT
+    h.id,
+    h.name,
+    h.dock_id,
+    s.id shipId,
+    s.name shipName,
+    s.hauler_id
+FROM Hauler h
+JOIN Ship s
+    ON s.hauler_id = h.id
+WHERE h.id = ?

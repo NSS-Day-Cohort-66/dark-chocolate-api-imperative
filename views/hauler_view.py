@@ -133,3 +133,14 @@ def retrieve_hauler(pk):
         serialized_hauler = json.dumps(dict(query_results))
 
     return serialized_hauler
+
+def create_hauler(request_body):
+    with sqlite3.connect("./shipping.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        INSERT INTO Hauler VALUES (null, ? , ?)
+        """, (request_body["name"], request_body["dock_id"]))
+        single_hauler = db_cursor.fetchone()
+        serialized_hauler = json.dumps(single_hauler)
+    return serialized_hauler
