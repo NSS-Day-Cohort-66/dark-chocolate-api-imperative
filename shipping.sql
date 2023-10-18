@@ -9,8 +9,8 @@ DROP TABLE IF EXISTS Dock;
 -- End block
 
 
--- Run this block to create the tables and seed them with some initial data
 CREATE TABLE `Dock` (
+-- Run this block to create the tables and seed them with some initial data
 	`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	`location`	TEXT NOT NULL,
 	`capacity` INTEGER NOT NULL
