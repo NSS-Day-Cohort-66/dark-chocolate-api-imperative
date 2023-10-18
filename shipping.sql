@@ -56,3 +56,14 @@ INSERT INTO `Ship` VALUES (null, "Dickens", 6);
 INSERT INTO `Ship` VALUES (null, "Kunde", 6);
 INSERT INTO `Ship` VALUES (null, "Hermiston", 5);
 -- End block
+
+SELECT
+    h.id AS haulerId,
+    h.name AS haulerName,
+    h.dock_id,
+    s.id,
+    s.name,
+    s.hauler_id
+FROM Ship s
+JOIN Hauler h
+ON h.id = s.hauler_id;
