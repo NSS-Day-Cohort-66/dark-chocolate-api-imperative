@@ -94,7 +94,6 @@ def list_ships(url):
 
     return serialized_ships
 
-
 def retrieve_ship(url):
     # Open a connection to the database
     with sqlite3.connect("./shipping.db") as conn:
